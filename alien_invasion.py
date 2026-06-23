@@ -1,0 +1,129 @@
+import sys
+import pygame
+from settings import Settings
+from ship import Ship
+from keyi import Keyi
+#我要吐槽，蟒蛇书给的一堆有的没的方法，我看不懂，给一点注释吧
+
+
+
+class AlienInvasion():
+
+    def __init__(self):
+        #第一个函数是初始化
+
+        pygame.init()
+        self.clock = pygame.time.Clock()
+        #这个东西主管时间吧
+        self.settings = Settings()
+        #这个东西包含set的内容，实际上是页面的数据，包括长，宽和颜色
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width , self.settings.screen_height)
+        )
+        #这里面的数据利用了set，定义了screen，装下set的数据
+        self.ship = Ship(self)
+        #赋予属性，这个属性是一个类
+        self.keyi = Keyi(self)
+        #给他一个背景类
+        #下面的是文字说明
+        pygame.display.set_caption("柯忆大王的外星人小游戏")
+
+
+
+    def run_game(self):
+        #运行的操作
+
+        while True:
+            #让文件持续运行
+            self._check_events()
+            #检测用户是否点了取消
+            self.ship.update()
+            #让船的位置一直变化
+            self._update_screen()
+            #持续刷新图像
+            self.clock.tick(120)
+            #设置帧率
+
+
+
+    def _check_events(self):
+        #对玩家按键经行检测
+
+        for event in pygame.event.get():
+            #一个循环，判断是否运行
+
+            if event.type == pygame.QUIT:
+                #如果用户取消了游戏
+                sys.exit()
+
+            elif event.type == pygame.KEYDOWN:
+                #如果用户没有取消的同时点击了键盘
+                self.check_keydown_events(event)
+
+            elif event.type == pygame.KEYUP:
+                #如果不是取消的同时，松开了键盘
+                self.check_keyup_event(event)
+
+
+                
+    def check_keydown_events(self,event):
+        #响应按下
+
+        if event.key == pygame.K_RIGHT:
+            #如果用户对右键操作
+            self.ship.moving_right = True
+
+        elif event.key == pygame.K_LEFT:
+            #如果用户对左键操作
+            self.ship.moving_left = True
+
+        elif event.key == pygame.K_UP:
+            #如果用户对上键操作
+            self.ship.moving_up = True
+
+        elif event.key == pygame.K_DOWN:
+            #如果用户对下键操作
+            self.ship.moving_down = True
+
+        elif event.key == pygame.K_ESCAPE:
+            #如果用户点击“esc”，可以取消了游戏
+            sys.exit()
+
+
+    def check_keyup_event(self,event):
+        if event.key == pygame.K_RIGHT:
+            #如果用户对右键操作
+            self.ship.moving_right = False
+
+        elif event.key == pygame.K_LEFT:
+            #如果用户对左键操作
+            self.ship.moving_left = False
+
+        elif event.key == pygame.K_UP:
+            #如果用户对上键操作
+            self.ship.moving_up = False
+
+        elif event.key == pygame.K_DOWN:
+            #如果用户对下键操作
+            self.ship.moving_down = False
+
+
+
+    def _update_screen(self):
+            
+            self.screen.fill(self.settings.bg_color)
+            #画出背景颜色
+            self.keyi.blitme()
+            #给出背景图片
+            self.ship.blitme()
+            #持续绘画飞船
+            pygame.display.flip()
+            #显示绘制的图案
+            
+
+
+if __name__ == "__main__":
+    ai = AlienInvasion()
+    #创建一个对象
+    ai.run_game()
+    #对他执行运行操作
