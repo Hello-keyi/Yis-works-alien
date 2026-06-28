@@ -1,4 +1,5 @@
 import pygame
+#加入pygame
 
 
 class Ship :
