@@ -14,6 +14,15 @@ class Settings :
         #这里设置船x的速度
         self.ship_speed_y = 3.5
         #这里设置船y的速度
-        
+        self.bullet_speed = 3
+        #设置子弹速度
+        self.bullet_width = 2
+        #设置子弹宽度
+        self.bullet_height = 10
+        #设置子弹长度
+        self.bullet_color = (60,60,60)
+        #设置子弹颜色
+        self.bullet_allowed = 10
+        #限制子弹数量
         
         
