@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from keyi import Keyi
+from bullet import Bullet
 #我要吐槽，蟒蛇书给的一堆有的没的方法，我看不懂，给一点注释吧
 
 
@@ -23,6 +24,8 @@ class AlienInvasion():
         #这里面的数据利用了set，定义了screen，装下set的数据
         self.ship = Ship(self)
         #赋予属性，这个属性是一个类
+        self.bullet = pygame.sprite.Group()
+
         self.keyi = Keyi(self)
         #给他一个背景类
         #下面的是文字说明
@@ -39,6 +42,9 @@ class AlienInvasion():
             #检测用户是否点了取消
             self.ship.update()
             #让船的位置一直变化
+            self._update_bullet()
+            #更新子弹数据
+            print(len(self.bullet))
             self._update_screen()
             #持续刷新图像
             self.clock.tick(120)
@@ -89,8 +95,15 @@ class AlienInvasion():
             #如果用户点击“esc”，可以取消了游戏
             sys.exit()
 
+        elif event.key == pygame.K_SPACE:
+            #点击空格就开火
+            self.fire_bullet()
+
+
 
     def check_keyup_event(self,event):
+        #如果按键上来了
+
         if event.key == pygame.K_RIGHT:
             #如果用户对右键操作
             self.ship.moving_right = False
@@ -109,17 +122,48 @@ class AlienInvasion():
 
 
 
+    def fire_bullet(self):
+        #开火的操作
+
+        if len(self.bullet) < self.settings.bullet_allowed:
+            #如果在场子弹多于设计值
+
+            new_bullet = Bullet(self)
+            #给一个新的子弹
+            self.bullet.add(new_bullet)
+            #子弹对象加一个新的
+
+
+
     def _update_screen(self):
+            #实时更新屏幕的图片
             
             self.screen.fill(self.settings.bg_color)
             #画出背景颜色
             self.keyi.blitme()
             #给出背景图片
+            for bullet in self.bullet.sprites():
+                #如果子弹是被定义的
+                bullet.draw_bullet()
+                #就画一个新的
             self.ship.blitme()
             #持续绘画飞船
             pygame.display.flip()
             #显示绘制的图案
-            
+
+
+
+    def _update_bullet(self):
+        #更新子弹
+
+        self.bullet.update()
+        #执行子弹数据更新
+        for bullet in self.bullet.copy():
+            #对每一个被定义的子弹
+            if bullet.rect.bottom <= 0:
+                #如果子弹位置超过限制
+                self.bullet.remove(bullet)
+                #让他消失
 
 
 if __name__ == "__main__":
