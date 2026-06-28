@@ -19,6 +19,7 @@ class Keyi:
         self.rect.center = self.screen_rect.center
 
 
+
     def blitme(self):
         #运行的时候，给他图片和位置
         self.screen.blit(self.image,self.rect)
