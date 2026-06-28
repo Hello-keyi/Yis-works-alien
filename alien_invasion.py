@@ -4,6 +4,7 @@ from settings import Settings
 from ship import Ship
 from keyi import Keyi
 from bullet import Bullet
+from alien import Alien
 #我要吐槽，蟒蛇书给的一堆有的没的方法，我看不懂，给一点注释吧
 
 
@@ -25,11 +26,15 @@ class AlienInvasion():
         self.ship = Ship(self)
         #赋予属性，这个属性是一个类
         self.bullet = pygame.sprite.Group()
-
+        #给pygame管理
+        self.aliens = pygame.sprite.Group()
+        #外星人给他
         self.keyi = Keyi(self)
         #给他一个背景类
-        #下面的是文字说明
+        self._create_fleet()
+        #创建外星人并且加入组
         pygame.display.set_caption("柯忆大王的外星人小游戏")
+        #文字说明
 
 
 
@@ -38,13 +43,13 @@ class AlienInvasion():
 
         while True:
             #让文件持续运行
+
             self._check_events()
             #检测用户是否点了取消
             self.ship.update()
             #让船的位置一直变化
             self._update_bullet()
             #更新子弹数据
-            print(len(self.bullet))
             self._update_screen()
             #持续刷新图像
             self.clock.tick(120)
@@ -146,6 +151,8 @@ class AlienInvasion():
                 #如果子弹是被定义的
                 bullet.draw_bullet()
                 #就画一个新的
+            self.aliens.draw(self.screen)
+            #画出外星人
             self.ship.blitme()
             #持续绘画飞船
             pygame.display.flip()
@@ -153,8 +160,9 @@ class AlienInvasion():
 
 
 
+
     def _update_bullet(self):
-        #更新子弹
+        #删除子弹多余
 
         self.bullet.update()
         #执行子弹数据更新
@@ -164,6 +172,33 @@ class AlienInvasion():
                 #如果子弹位置超过限制
                 self.bullet.remove(bullet)
                 #让他消失
+    
+
+
+    def _create_fleet(self):
+        #创造外星人
+
+        alien = Alien(self)
+        #创建对象
+        alien_width , alien_height = alien.rect.size
+        current_x = alien_width
+        current_y = alien_height
+        while current_y < (self.settings.screen_height - 3*alien_height):
+            while current_x < (self.settings.screen_width - 2*alien_width):
+                self._create_alien(current_x,current_y)
+                current_x += 2*alien_width
+            current_x = alien_width
+            current_y += 2 * alien_height
+
+    
+    def _create_alien(self,x_position,y_position):
+
+        new_alien = Alien(self)
+        new_alien.x = x_position
+        new_alien.rect.x = x_position
+        new_alien.rect.y = y_position
+        self.aliens.add(new_alien)
+
 
 
 if __name__ == "__main__":

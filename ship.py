@@ -1,4 +1,5 @@
 import pygame
+#加入pygame
 
 
 class Ship :
@@ -7,20 +8,23 @@ class Ship :
 
     def __init__(self,al_game):
         #对这个对象进行一开始的操作
-
+        
         self.screen = al_game.screen
         #告诉对象，生成的页面
         self.settings = al_game.settings
         #我给他seet的参数
         self.screen_rect = al_game.screen.get_rect()
         #告诉对象，窗口的大小
-        self.image = pygame.image.load("D:\图片\ship.bmp")
+        self.image = pygame.image.load("D:\图片\ship_bmp.bmp")
+        self.image = pygame.transform.scale(self.image, (60,60))
         #让对象有了图片，生成的图片
         self.rect = self.image.get_rect()
         #给对象一个属性，位置
         self.rect.midbottom = self.screen_rect.midbottom
         #接下来是按键设置的初始设置
         self.moving_right = False
+        
+
         #右的设置
         self.moving_left = False
         #左的设置
