@@ -27,8 +27,8 @@ class Bullet(Sprite):
 
 
     def update(self):
-
         #更新子弹的位置
+        
         self.y -= self.settings.bullet_speed
         #子弹的y坐标改变的值是setting的设置值
         self.rect.y = self.y
