@@ -1,0 +1,21 @@
+# Python编译产生的垃圾文件，不用提交
+__pycache__/
+*.pyc
+*.pyo
+
+# Python的虚拟环境文件夹（装依赖的，超大，不用提交）
+venv/
+env/
+.venv/
+
+# 本地隐私配置（比如你的数据库密码、API密钥，不能给别人）
+config.local.py
+.env
+
+# 日志文件
+*.log
+
+# Windows/Mac的系统垃圾文件
+.DS_Store
+Thumbs.db__pycache__/
+*.pyc
