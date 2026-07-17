@@ -6,7 +6,7 @@ class Keyi:
     def __init__(self,al_game):
         #给图片进行初始化操作，告诉他一开始要有什么信息
 
-        self.image = pygame.image.load("D:\图片\profile_photo_jpg.jpg")
+        self.image = pygame.image.load("image\profile_photo_bmp.bmp")
         #给他图片
         self.screen = al_game.screen
         #设计尺寸
@@ -15,7 +15,7 @@ class Keyi:
         self.screen_rect = al_game.screen.get_rect()
         #告诉对象，窗口的大小
         self.rect = self.image.get_rect()
-        #给对象一个属性，位置
+        #给对象一个矩形
         
 
 
