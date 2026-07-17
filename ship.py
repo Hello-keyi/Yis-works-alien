@@ -2,7 +2,7 @@ import pygame
 #加入pygame
 
 
-class Ship :
+class Ship():
 #这个是关于ship的参数设置
 
 
@@ -10,19 +10,20 @@ class Ship :
         #对这个对象进行一开始的操作
         
         self.screen = al_game.screen
-        #告诉对象，生成的页面
+        #生成的页面
         self.settings = al_game.settings
-        #我给他seet的参数
+        #我给他设置的参数
         self.screen_rect = al_game.screen.get_rect()
-        #告诉对象，窗口的大小
-        self.image = pygame.image.load("D:\图片\ship_bmp.bmp")
+        #生成一个矩形
+        self.image = pygame.image.load("images/ship_bmp.bmp")
         self.image = pygame.transform.scale(self.image, (60,60))
         #让对象有了图片，生成的图片
         self.rect = self.image.get_rect()
-        #给对象一个属性，位置
+        #给对象一个属性，矩形
         self.rect.midbottom = self.screen_rect.midbottom
-        #接下来是按键设置的初始设置
+        #矩形的底部就是屏幕的底部
         self.moving_right = False
+        #接下来是按键设置的初始设置
         
 
         #右的设置
@@ -42,6 +43,7 @@ class Ship :
         #每一次刷新，都给对象图片和位置
 
         self.screen.blit(self.image,self.rect)
+        #对象的图片和位置
 
 
 
@@ -65,4 +67,14 @@ class Ship :
         self.rect.y = self.y
         #这样x和y的坐标就都给了属性了
         
+    
+
+    def center_ship(self):
+        #让飞船回到初始位置
+
+        self.rect.midbottom = self.screen_rect.midbottom
+        #矩形的底部就是屏幕的底部
+        self.x = float(self.rect.x)
+        #给坐标设置成浮点数
+        self.y = float(self.rect.y)
 
